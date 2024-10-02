@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "AIP Long Processing",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+	"displayName": "IntegrationService",
+	"visibility": "CLIENT_VISIBLE",
+	"decryptedCredential": {
+		"credentialType": "OIDC_TOKEN",
+		"oidcToken": {
+			"serviceAccountEmail": "api-integration-service@apigee-test85.iam.gserviceaccount.com",
+			"audience": "https://sleepproc-693189995131.europe-west4.run.app"
+		}
+	}
+}

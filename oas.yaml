@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  title: Sleep API
+  description: This API provides a sleeping service for simulating long-running calls.
+  version: 1.0.0
+servers:
+  - url: https://sleepproc-693189995131.europe-west3.run.app
+paths:
+  /sleep:
+    get:
+      description: Sleep for a number of milliseconds (default 500).
+      operationId: sleep
+      parameters:
+        - in: query
+          name: ms
+          example: 100
+          required: false
+          schema:
+            type: string
+            default: 500
+          description: The number of milliseconds to sleep
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: yawn, slept for 500 ms.
+      tags:
+        - sleep

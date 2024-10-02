@@ -1,0 +1,15 @@
+meta {
+  name: Get Execution Status
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://integrations.googleapis.com/v1/projects/$PROJECT_ID/locations/$REGION/integrations/long-processing-flow/executions/$EXECUTION_ID
+  body: none
+  auth: none
+}
+
+headers {
+  authorization: Bearer $(gcloud auth print-access-token)
+}

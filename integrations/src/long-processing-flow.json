@@ -1,0 +1,457 @@
+{
+	"description": "A flow to demonstrate retries for long processing jobs.",
+	"snapshotNumber": "4",
+	"triggerConfigs": [
+		{
+			"label": "ASYNC API Trigger",
+			"triggerType": "API",
+			"triggerNumber": "2",
+			"triggerId": "api_trigger/long-processing-flow-async",
+			"startTasks": [
+				{
+					"taskId": "3"
+				}
+			],
+			"properties": {
+				"Trigger name": "long-processing-flow-async"
+			}
+		},
+		{
+			"label": "SYNC API Trigger",
+			"triggerType": "API",
+			"triggerNumber": "1",
+			"triggerId": "api_trigger/long-processing-flow-sync",
+			"startTasks": [
+				{
+					"taskId": "1"
+				}
+			],
+			"properties": {
+				"Trigger name": "long-processing-flow-sync"
+			}
+		}
+	],
+	"taskConfigs": [
+		{
+			"task": "GenericRestV2Task",
+			"taskId": "1",
+			"parameters": {
+				"additionalHeaders": {
+					"key": "additionalHeaders",
+					"value": {}
+				},
+				"authConfig": {
+					"key": "authConfig",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
+					}
+				},
+				"authConfigName": {
+					"key": "authConfigName",
+					"value": {
+						"stringValue": "IntegrationService"
+					}
+				},
+				"disableSSLValidation": {
+					"key": "disableSSLValidation",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"followRedirects": {
+					"key": "followRedirects",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"httpMethod": {
+					"key": "httpMethod",
+					"value": {
+						"stringValue": "GET"
+					}
+				},
+				"httpParams": {
+					"key": "httpParams",
+					"value": {}
+				},
+				"jsonAdditionalHeaders": {
+					"key": "jsonAdditionalHeaders",
+					"value": {
+						"jsonValue": "null"
+					}
+				},
+				"requestBody": {
+					"key": "requestBody",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"requestorId": {
+					"key": "requestorId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"responseBody": {
+					"key": "responseBody",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_1_responseBody`$"
+							]
+						}
+					}
+				},
+				"responseHeader": {
+					"key": "responseHeader",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_1_responseHeader`$"
+							]
+						}
+					}
+				},
+				"responseStatus": {
+					"key": "responseStatus",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_1_responseStatus`$"
+							]
+						}
+					}
+				},
+				"throwError": {
+					"key": "throwError",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"timeout": {
+					"key": "timeout",
+					"value": {
+						"intValue": "0"
+					}
+				},
+				"url": {
+					"key": "url",
+					"value": {
+						"stringValue": "$`CONFIG_SleepServiceUrl`$"
+					}
+				},
+				"urlFetchingService": {
+					"key": "urlFetchingService",
+					"value": {
+						"stringValue": "HARPOON"
+					}
+				},
+				"urlQueryStrings": {
+					"key": "urlQueryStrings",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"ms\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"170000\"\n      }\n    }\n  }]\n}"
+					}
+				},
+				"useSSL": {
+					"key": "useSSL",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"userAgent": {
+					"key": "userAgent",
+					"value": {
+						"stringValue": ""
+					}
+				}
+			},
+			"displayName": "Call Sleep Service 170s",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"synchronousCallFailurePolicy": {},
+			"errorCatcherId": "ErrorCatcher_1",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "GenericRestV2Task",
+			"taskId": "2",
+			"parameters": {
+				"additionalHeaders": {
+					"key": "additionalHeaders",
+					"value": {}
+				},
+				"authConfig": {
+					"key": "authConfig",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
+					}
+				},
+				"authConfigName": {
+					"key": "authConfigName",
+					"value": {
+						"stringValue": "IntegrationService"
+					}
+				},
+				"disableSSLValidation": {
+					"key": "disableSSLValidation",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"followRedirects": {
+					"key": "followRedirects",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"httpMethod": {
+					"key": "httpMethod",
+					"value": {
+						"stringValue": "GET"
+					}
+				},
+				"httpParams": {
+					"key": "httpParams",
+					"value": {}
+				},
+				"jsonAdditionalHeaders": {
+					"key": "jsonAdditionalHeaders",
+					"value": {
+						"jsonValue": "null"
+					}
+				},
+				"requestBody": {
+					"key": "requestBody",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"requestorId": {
+					"key": "requestorId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"responseBody": {
+					"key": "responseBody",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_2_responseBody`$"
+							]
+						}
+					}
+				},
+				"responseHeader": {
+					"key": "responseHeader",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_2_responseHeader`$"
+							]
+						}
+					}
+				},
+				"responseStatus": {
+					"key": "responseStatus",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_2_responseStatus`$"
+							]
+						}
+					}
+				},
+				"throwError": {
+					"key": "throwError",
+					"value": {
+						"booleanValue": true
+					}
+				},
+				"timeout": {
+					"key": "timeout",
+					"value": {
+						"intValue": "0"
+					}
+				},
+				"url": {
+					"key": "url",
+					"value": {
+						"stringValue": "$`CONFIG_SleepServiceUrl`$"
+					}
+				},
+				"urlFetchingService": {
+					"key": "urlFetchingService",
+					"value": {
+						"stringValue": "HARPOON"
+					}
+				},
+				"urlQueryStrings": {
+					"key": "urlQueryStrings",
+					"value": {}
+				},
+				"useSSL": {
+					"key": "useSSL",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"userAgent": {
+					"key": "userAgent",
+					"value": {
+						"stringValue": ""
+					}
+				}
+			},
+			"displayName": "Call Sleep Service",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "ERROR_TASK"
+		},
+		{
+			"task": "SubWorkflowExecutorV2Task",
+			"taskId": "3",
+			"parameters": {
+				"disableEUCPropagation": {
+					"key": "disableEUCPropagation",
+					"value": {
+						"booleanValue": false
+					}
+				},
+				"executionIds": {
+					"key": "executionIds",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_3_executionIds`$"
+							]
+						}
+					}
+				},
+				"executionStrategy": {
+					"key": "executionStrategy",
+					"value": {
+						"stringValue": "ASYNC"
+					}
+				},
+				"inputMap": {
+					"key": "inputMap",
+					"value": {
+						"stringArray": {}
+					}
+				},
+				"overrideParamsMap": {
+					"key": "overrideParamsMap",
+					"value": {
+						"stringArray": {}
+					}
+				},
+				"requestParamsMap": {
+					"key": "requestParamsMap",
+					"value": {}
+				},
+				"responseParamsMap": {
+					"key": "responseParamsMap",
+					"value": {}
+				},
+				"timeInMsToSchedule": {
+					"key": "timeInMsToSchedule",
+					"value": {
+						"intValue": "0"
+					}
+				},
+				"triggerId": {
+					"key": "triggerId",
+					"value": {
+						"stringValue": "api_trigger/long-processing-flow-sync"
+					}
+				},
+				"workflowName": {
+					"key": "workflowName",
+					"value": {
+						"stringValue": "long-processing-flow"
+					}
+				}
+			},
+			"displayName": "Call Sync API Trigger",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"synchronousCallFailurePolicy": {},
+			"errorCatcherId": "ErrorCatcher_1",
+			"externalTaskType": "NORMAL_TASK"
+		}
+	],
+	"integrationParameters": [
+		{
+			"key": "`Task_1_responseHeader`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_1"
+		},
+		{
+			"key": "`Task_1_responseBody`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_1"
+		},
+		{
+			"key": "`Task_1_responseStatus`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_1"
+		},
+		{
+			"key": "`Task_2_responseHeader`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_responseBody`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_responseStatus`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_3_executionIds`",
+			"dataType": "STRING_ARRAY",
+			"isTransient": true,
+			"producer": "1_3"
+		}
+	],
+	"integrationConfigParameters": [
+		{
+			"parameter": {
+				"key": "`CONFIG_SleepServiceUrl`",
+				"dataType": "STRING_VALUE",
+				"defaultValue": {
+					"stringValue": "https://sleepproc-693189995131.europe-west4.run.app/sleep"
+				},
+				"displayName": "`CONFIG_SleepServiceUrl`"
+			},
+			"value": {
+				"stringValue": "https://sleepproc-693189995131.europe-west4.run.app/sleep"
+			}
+		}
+	],
+	"databasePersistencePolicy": "DATABASE_PERSISTENCE_ASYNC",
+	"errorCatcherConfigs": [
+		{
+			"label": "ErrorCatcher",
+			"errorCatcherNumber": "1",
+			"errorCatcherId": "ErrorCatcher_1",
+			"startErrorTasks": [
+				{
+					"taskId": "2"
+				}
+			]
+		}
+	],
+	"cloudLoggingDetails": {
+		"cloudLoggingSeverity": "",
+		"enableCloudLogging": false
+	}
+}

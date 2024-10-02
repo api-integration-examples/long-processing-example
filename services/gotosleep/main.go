@@ -1,0 +1,58 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"strconv"
+	"time"
+
+	"cloud.google.com/go/pubsub"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+
+	r := gin.Default()
+
+	r.GET("/sleep", func(c *gin.Context) {
+		timeInMs := c.DefaultQuery("ms", "500")
+		num, _ := strconv.Atoi(timeInMs)
+		time.Sleep(time.Duration(num) * time.Millisecond)
+
+		id, err := publishMessage(os.Getenv("PROJECT_ID"), os.Getenv("TOPIC_ID"), "WAKE UP")
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
+		c.String(200, "yawn, slept for "+timeInMs+"ms and published wakeup message "+id)
+	})
+
+	r.Run(":8080")
+}
+
+func publishMessage(projectID, topicID, msg string) (string, error) {
+	// projectID := "my-project-id"
+	// topicID := "my-topic"
+	// msg := "Hello World"
+	ctx := context.Background()
+	client, err := pubsub.NewClient(ctx, projectID)
+	if err != nil {
+		return "", fmt.Errorf("pubsub: NewClient: %w", err)
+	}
+	defer client.Close()
+
+	t := client.Topic(topicID)
+	result := t.Publish(ctx, &pubsub.Message{
+		Data: []byte(msg),
+	})
+	// Block until the result is returned and a server-generated
+	// ID is returned for the published message.
+	id, err := result.Get(ctx)
+	if err != nil {
+		return "", fmt.Errorf("pubsub: result.Get: %w", err)
+	}
+	return id, nil
+}

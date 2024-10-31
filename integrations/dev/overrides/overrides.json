@@ -1,4 +1,12 @@
 {
+	"trigger_overrides": [
+		{
+			"triggerNumber": "4",
+			"projectId": "apigee-test85",
+			"topicName": "longproc",
+			"serviceAccount": "api-integration-service"
+		}
+	],
 	"integration_overrides": {
 		"databasePersistencePolicy": "DATABASE_PERSISTENCE_ASYNC",
 		"enableVariableMasking": false,

@@ -1,6 +1,6 @@
 {
 	"description": "A flow to demonstrate retries for long processing jobs.",
-	"snapshotNumber": "4",
+	"snapshotNumber": "24",
 	"triggerConfigs": [
 		{
 			"label": "ASYNC API Trigger",
@@ -28,6 +28,22 @@
 			],
 			"properties": {
 				"Trigger name": "long-processing-flow-sync"
+			}
+		},
+		{
+			"label": "Proc finished event",
+			"triggerType": "CLOUD_PUBSUB_EXTERNAL",
+			"triggerNumber": "4",
+			"triggerId": "cloud_pubsub_external_trigger/projects/apigee-test85/subscriptions/apigee-test85_longproc",
+			"startTasks": [
+				{
+					"taskId": "4"
+				}
+			],
+			"properties": {
+				"IP Project name": "apigee-test85",
+				"Service account": "api-integration-service@apigee-test85.iam.gserviceaccount.com",
+				"Subscription name": "apigee-test85_longproc"
 			}
 		}
 	],
@@ -149,145 +165,8 @@
 				"urlQueryStrings": {
 					"key": "urlQueryStrings",
 					"value": {
-						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"ms\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"170000\"\n      }\n    }\n  }]\n}"
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"ms\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$SleepInMs$\"\n    }\n  }]\n}"
 					}
-				},
-				"useSSL": {
-					"key": "useSSL",
-					"value": {
-						"booleanValue": false
-					}
-				},
-				"userAgent": {
-					"key": "userAgent",
-					"value": {
-						"stringValue": ""
-					}
-				}
-			},
-			"displayName": "Call Sleep Service 170s",
-			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
-			"synchronousCallFailurePolicy": {},
-			"errorCatcherId": "ErrorCatcher_1",
-			"externalTaskType": "NORMAL_TASK"
-		},
-		{
-			"task": "GenericRestV2Task",
-			"taskId": "2",
-			"parameters": {
-				"additionalHeaders": {
-					"key": "additionalHeaders",
-					"value": {}
-				},
-				"authConfig": {
-					"key": "authConfig",
-					"value": {
-						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
-					}
-				},
-				"authConfigName": {
-					"key": "authConfigName",
-					"value": {
-						"stringValue": "IntegrationService"
-					}
-				},
-				"disableSSLValidation": {
-					"key": "disableSSLValidation",
-					"value": {
-						"booleanValue": false
-					}
-				},
-				"followRedirects": {
-					"key": "followRedirects",
-					"value": {
-						"booleanValue": true
-					}
-				},
-				"httpMethod": {
-					"key": "httpMethod",
-					"value": {
-						"stringValue": "GET"
-					}
-				},
-				"httpParams": {
-					"key": "httpParams",
-					"value": {}
-				},
-				"jsonAdditionalHeaders": {
-					"key": "jsonAdditionalHeaders",
-					"value": {
-						"jsonValue": "null"
-					}
-				},
-				"requestBody": {
-					"key": "requestBody",
-					"value": {
-						"stringValue": ""
-					}
-				},
-				"requestorId": {
-					"key": "requestorId",
-					"value": {
-						"stringValue": ""
-					}
-				},
-				"responseBody": {
-					"key": "responseBody",
-					"value": {
-						"stringArray": {
-							"stringValues": [
-								"$`Task_2_responseBody`$"
-							]
-						}
-					}
-				},
-				"responseHeader": {
-					"key": "responseHeader",
-					"value": {
-						"stringArray": {
-							"stringValues": [
-								"$`Task_2_responseHeader`$"
-							]
-						}
-					}
-				},
-				"responseStatus": {
-					"key": "responseStatus",
-					"value": {
-						"stringArray": {
-							"stringValues": [
-								"$`Task_2_responseStatus`$"
-							]
-						}
-					}
-				},
-				"throwError": {
-					"key": "throwError",
-					"value": {
-						"booleanValue": true
-					}
-				},
-				"timeout": {
-					"key": "timeout",
-					"value": {
-						"intValue": "0"
-					}
-				},
-				"url": {
-					"key": "url",
-					"value": {
-						"stringValue": "$`CONFIG_SleepServiceUrl`$"
-					}
-				},
-				"urlFetchingService": {
-					"key": "urlFetchingService",
-					"value": {
-						"stringValue": "HARPOON"
-					}
-				},
-				"urlQueryStrings": {
-					"key": "urlQueryStrings",
-					"value": {}
 				},
 				"useSSL": {
 					"key": "useSSL",
@@ -304,7 +183,7 @@
 			},
 			"displayName": "Call Sleep Service",
 			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
-			"externalTaskType": "ERROR_TASK"
+			"externalTaskType": "NORMAL_TASK"
 		},
 		{
 			"task": "SubWorkflowExecutorV2Task",
@@ -346,7 +225,9 @@
 				},
 				"requestParamsMap": {
 					"key": "requestParamsMap",
-					"value": {}
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"SleepInMs\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"SleepInMs\"\n      }\n    }\n  }]\n}"
+					}
 				},
 				"responseParamsMap": {
 					"key": "responseParamsMap",
@@ -373,8 +254,27 @@
 			},
 			"displayName": "Call Sync API Trigger",
 			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
-			"synchronousCallFailurePolicy": {},
-			"errorCatcherId": "ErrorCatcher_1",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "JsonnetMapperTask",
+			"taskId": "4",
+			"parameters": {
+				"diagramMetadata": {
+					"key": "diagramMetadata",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/google.protobuf.Struct\",\n  \"value\": {\n    \"0\": {\n      \"inputs\": [{\n        \"name\": \"CloudPubSubMessage\",\n        \"type\": 17.0,\n        \"tokenType\": 0.0\n      }],\n      \"outputs\": [{\n        \"name\": \"LongProcResult\",\n        \"type\": 1.0,\n        \"tokenType\": 0.0\n      }],\n      \"mappings\": [{\n        \"inputs\": [\"CloudPubSubMessage.data\"],\n        \"output\": \"LongProcResult\"\n      }]\n    }\n  }\n}"
+					}
+				},
+				"template": {
+					"key": "template",
+					"value": {
+						"stringValue": "local f = import \"functions\";\nlocal inputs = {\"CloudPubSubMessage\": std.extVar(\"CloudPubSubMessage\")};\n{\"LongProcResult\": inputs[\"CloudPubSubMessage\"][\"data\"]}"
+					}
+				}
+			},
+			"displayName": "Data Transformer (Script)",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
 			"externalTaskType": "NORMAL_TASK"
 		}
 	],
@@ -398,28 +298,82 @@
 			"producer": "1_1"
 		},
 		{
-			"key": "`Task_2_responseHeader`",
-			"dataType": "STRING_VALUE",
-			"isTransient": true,
-			"producer": "1_2"
-		},
-		{
-			"key": "`Task_2_responseBody`",
-			"dataType": "STRING_VALUE",
-			"isTransient": true,
-			"producer": "1_2"
-		},
-		{
-			"key": "`Task_2_responseStatus`",
-			"dataType": "STRING_VALUE",
-			"isTransient": true,
-			"producer": "1_2"
-		},
-		{
 			"key": "`Task_3_executionIds`",
 			"dataType": "STRING_ARRAY",
 			"isTransient": true,
 			"producer": "1_3"
+		},
+		{
+			"key": "CloudPubSubMessage",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"producer": "2_4",
+			"jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"title\": \"Cloud Pub/Sub Message\",\n  \"description\": \"Message received by Cloud Pub/Sub.\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"string\",\n      \"description\": \"The message data sent by the publisher\"\n    },\n    \"attributes\": {\n      \"type\": \"object\",\n      \"description\": \"Attributes for this message\"\n    },\n    \"messageId\": {\n      \"type\": \"string\",\n      \"description\": \"ID of this message, assigned by the server when the message is published. Guaranteed to be unique within the topic.\"\n    },\n    \"publishTime\": {\n      \"type\": \"string\",\n      \"description\": \"The time at which the message was published, populated by the server when it receives the topics.publish call\"\n    },\n    \"orderingKey\": {\n      \"type\": \"string\",\n      \"description\": \"Identifies related messages for which publish order should be respected.\"\n    }\n  }\n}"
+		},
+		{
+			"key": "LongProcResult",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": ""
+			},
+			"inputOutputType": "OUT"
+		},
+		{
+			"key": "`ExecutionMode`",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": ""
+			},
+			"isTransient": true
+		},
+		{
+			"key": "`ErrorInfo`",
+			"dataType": "JSON_VALUE",
+			"defaultValue": {
+				"jsonValue": "{\n  \"message\": \"\",\n  \"code\": 0.0\n}"
+			},
+			"isTransient": true,
+			"jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"code\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+		},
+		{
+			"key": "`ExecutionId`",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": ""
+			},
+			"isTransient": true
+		},
+		{
+			"key": "`IntegrationName`",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": ""
+			},
+			"isTransient": true
+		},
+		{
+			"key": "`Region`",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": ""
+			},
+			"isTransient": true
+		},
+		{
+			"key": "`ProjectId`",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": ""
+			},
+			"isTransient": true
+		},
+		{
+			"key": "SleepInMs",
+			"dataType": "STRING_VALUE",
+			"defaultValue": {
+				"stringValue": "10000"
+			},
+			"inputOutputType": "IN"
 		}
 	],
 	"integrationConfigParameters": [
@@ -428,28 +382,13 @@
 				"key": "`CONFIG_SleepServiceUrl`",
 				"dataType": "STRING_VALUE",
 				"defaultValue": {
-					"stringValue": "https://sleepproc-693189995131.europe-west4.run.app/sleep"
+					"stringValue": "https://sleepproc-693189995131.europe-west3.run.app/sleep"
 				},
 				"displayName": "`CONFIG_SleepServiceUrl`"
-			},
-			"value": {
-				"stringValue": "https://sleepproc-693189995131.europe-west4.run.app/sleep"
 			}
 		}
 	],
 	"databasePersistencePolicy": "DATABASE_PERSISTENCE_ASYNC",
-	"errorCatcherConfigs": [
-		{
-			"label": "ErrorCatcher",
-			"errorCatcherNumber": "1",
-			"errorCatcherId": "ErrorCatcher_1",
-			"startErrorTasks": [
-				{
-					"taskId": "2"
-				}
-			]
-		}
-	],
 	"cloudLoggingDetails": {
 		"cloudLoggingSeverity": "",
 		"enableCloudLogging": false

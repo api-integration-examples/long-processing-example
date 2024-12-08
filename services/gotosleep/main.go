@@ -13,6 +13,12 @@ import (
 
 func main() {
 
+	doPubSub := os.Getenv("PUBSUB_ON_WAKE")
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		PORT = "8080"
+	}
+
 	r := gin.Default()
 
 	r.GET("/sleep", func(c *gin.Context) {
@@ -20,9 +26,13 @@ func main() {
 		num, _ := strconv.Atoi(timeInMs)
 		time.Sleep(time.Duration(num) * time.Millisecond)
 
-		id, err := publishMessage(os.Getenv("PROJECT_ID"), os.Getenv("TOPIC_ID"), "WAKE UP")
-		if err != nil {
-			fmt.Println(err)
+		var id = ""
+		if doPubSub == "TRUE" {
+			pubId, err := publishMessage(os.Getenv("PROJECT_ID"), os.Getenv("TOPIC_ID"), "WAKE UP")
+			id = pubId
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -30,7 +40,7 @@ func main() {
 		c.String(200, "yawn, slept for "+timeInMs+"ms and published wakeup message "+id)
 	})
 
-	r.Run(":8080")
+	r.Run(":" + PORT)
 }
 
 func publishMessage(projectID, topicID, msg string) (string, error) {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -10,6 +11,8 @@ import (
 	"cloud.google.com/go/pubsub"
 	"github.com/gin-gonic/gin"
 )
+
+var payload map[string]any = nil
 
 func main() {
 
@@ -38,6 +41,20 @@ func main() {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
 		c.String(200, "yawn, slept for "+timeInMs+"ms and published wakeup message "+id)
+	})
+
+	r.POST("/payload", func(c *gin.Context) {
+
+		if payload == nil {
+			b, err := os.ReadFile("large.payload.local.json")
+			if err == nil {
+				json.Unmarshal(b, &payload)
+			}
+		}
+
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
+		c.JSON(200, payload)
 	})
 
 	r.Run(":" + PORT)
